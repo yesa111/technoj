@@ -176,37 +176,12 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
 /**
  * Model
  */
-let mixer = null
 gltfLoader.load(
     '/dist/models/Gameboy/gameboy_animated.glb',
-    (gltf) =>
-    {   
-        gltf.scene.traverse((child) =>
-        {
+    (gltf) => {
+        gltf.scene.traverse((child) => {
             child.material = bakedMaterial
         })
-        mixer = new THREE.AnimationMixer(gltf.scene)
-        console.log('Animasyonlar:', gltf.animations)
-        if (Array.isArray(gltf.animations) && gltf.animations.length > 0) {
-            gltf.animations.forEach((anim, i) => {
-                if (anim && anim.uuid && typeof anim.tracks !== 'undefined') {
-                    try {
-                        const action = mixer.clipAction(anim)
-                        if (action) {
-                            action.play()
-                        } else {
-                            console.warn('clipAction null döndü:', i, anim)
-                        }
-                    } catch (e) {
-                        console.error('Animasyon oynatılamadı:', i, anim, e)
-                    }
-                } else {
-                    console.warn('Animasyon undefined veya geçersiz:', i, anim)
-                }
-            })
-        } else {
-            console.warn('GLB dosyasında animasyon yok veya animasyonlar okunamadı.')
-        }
         scene.add(gltf.scene)
     }
 )
@@ -596,11 +571,6 @@ const tick = () =>
     // Animate camera
     if(mode === 'menu')
     {   
-        // Update mixer
-        if(mixer !== null)
-        {
-            mixer.update(deltaTime)
-        }
         for(const point of pointsInspect)
         {
             point.element.classList.remove('visible')
@@ -700,18 +670,6 @@ const tick = () =>
         const parallaxY = - cursor.y * 1.5
         cameraGroup.position.z += (parallaxX - cameraGroup.position.z) * 5 * deltaTime
         cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
-        // Update mixer
-        if(mixer !== null)
-        {
-            mixer.update(deltaTime)
-        }
-        for(const point of pointsMenu)
-        {
-            point.element.classList.remove('visible')
-        }
-        controls.enableRotate = false
-        controls.enablePan = false
-        controls.enableZoom = false
 
         if(moveGoomba === 'left')
         {
