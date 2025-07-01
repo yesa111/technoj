@@ -178,7 +178,7 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
  */
 let mixer = null
 gltfLoader.load(
-    './models/Gameboy/gameboy_animated.glb',
+    '/static/models/Gameboy/gameboy_animated.glb',
     (gltf) =>
     {   
         gltf.scene.traverse((child) =>
