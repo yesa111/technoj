@@ -186,13 +186,26 @@ gltfLoader.load(
             child.material = bakedMaterial
         })
         mixer = new THREE.AnimationMixer(gltf.scene)
-        // Animasyonlar varsa oynat
+        console.log('Animasyonlar:', gltf.animations)
         if (gltf.animations && gltf.animations.length > 0) {
-            // Tüm animasyonları sırayla oynat
-            gltf.animations.forEach(anim => {
-                const action = mixer.clipAction(anim)
-                action.play()
+            gltf.animations.forEach((anim, i) => {
+                if (anim) {
+                    try {
+                        const action = mixer.clipAction(anim)
+                        if (action) {
+                            action.play()
+                        } else {
+                            console.warn('clipAction null döndü:', i, anim)
+                        }
+                    } catch (e) {
+                        console.error('Animasyon oynatılamadı:', i, anim, e)
+                    }
+                } else {
+                    console.warn('Animasyon undefined:', i)
+                }
             })
+        } else {
+            console.warn('GLB dosyasında animasyon yok veya animasyonlar okunamadı.')
         }
         scene.add(gltf.scene)
     }
