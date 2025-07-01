@@ -114,7 +114,7 @@ const loadingManager = new THREE.LoadingManager(
 const music = new Audio('/sounds/mario.mp3')
 
 // Texture loader
-const textureLoader = new THREE.TextureLoader(loadingManager)
+// const textureLoader = new THREE.TextureLoader(loadingManager)
 const gltfLoader = new GLTFLoader(loadingManager)
 
 /**
@@ -163,15 +163,15 @@ scene.add(overlay)
 /**
  * Textures
  */
-const bakedTexture = textureLoader.load('./models/Gameboy/gameboy_baked_texture.jpg')
-bakedTexture.flipY = false
-bakedTexture.colorSpace = THREE.SRGBColorSpace
+// const bakedTexture = textureLoader.load('./models/Gameboy/gameboy_baked_texture.jpg')
+// bakedTexture.flipY = false
+// bakedTexture.colorSpace = THREE.SRGBColorSpace
 
 /**
  * Materials
  */
 // Baked material
-const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
+// const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
 
 /**
  * Model
@@ -180,10 +180,6 @@ gltfLoader.load(
     './models/Gameboy/gameboy_animated.glb',
     (gltf) =>
     {   
-        gltf.scene.traverse((child) =>
-        {
-            child.material = bakedMaterial
-        })
         scene.add(gltf.scene)
     }
 )
