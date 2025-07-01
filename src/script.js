@@ -111,7 +111,7 @@ const loadingManager = new THREE.LoadingManager(
 )
 
 // Sound
-const music = new Audio('/sounds/mario.mp3')
+const music = new Audio('/static/sounds/mario.mp3')
 
 // Texture loader
 const textureLoader = new THREE.TextureLoader(loadingManager)
@@ -186,14 +186,14 @@ gltfLoader.load(
             child.material = bakedMaterial
         })
         mixer = new THREE.AnimationMixer(gltf.scene)
-        const actionSign = mixer.clipAction(gltf.animations[8])
-        const actionMario = mixer.clipAction(gltf.animations[6])
-        const actionGumba = mixer.clipAction(gltf.animations[7])
-        
-        actionSign.play()
-        actionMario.play()
-        actionGumba.play()
-
+        // Animasyonlar varsa oynat
+        if (gltf.animations && gltf.animations.length > 0) {
+            // Tüm animasyonları sırayla oynat
+            gltf.animations.forEach(anim => {
+                const action = mixer.clipAction(anim)
+                action.play()
+            })
+        }
         scene.add(gltf.scene)
     }
 )
