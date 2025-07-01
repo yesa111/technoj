@@ -176,7 +176,6 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
 /**
  * Model
  */
-let mixer = null
 gltfLoader.load(
     './models/Gameboy/gameboy_animated.glb',
     (gltf) =>
@@ -185,15 +184,6 @@ gltfLoader.load(
         {
             child.material = bakedMaterial
         })
-        mixer = new THREE.AnimationMixer(gltf.scene)
-        const actionSign = mixer.clipAction(gltf.animations[8])
-        const actionMario = mixer.clipAction(gltf.animations[6])
-        const actionGumba = mixer.clipAction(gltf.animations[7])
-        
-        actionSign.play()
-        actionMario.play()
-        actionGumba.play()
-
         scene.add(gltf.scene)
     }
 )
@@ -583,15 +573,6 @@ const tick = () =>
     // Animate camera
     if(mode === 'menu')
     {   
-        // Update mixer
-        if(mixer !== null)
-        {
-            mixer.update(deltaTime)
-        }
-        for(const point of pointsInspect)
-        {
-            point.element.classList.remove('visible')
-        }
         controls.enableRotate = false
         controls.enablePan = false
         controls.enableZoom = false
@@ -687,15 +668,6 @@ const tick = () =>
         const parallaxY = - cursor.y * 1.5
         cameraGroup.position.z += (parallaxX - cameraGroup.position.z) * 5 * deltaTime
         cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
-        // Update mixer
-        if(mixer !== null)
-        {
-            mixer.update(deltaTime)
-        }
-        for(const point of pointsMenu)
-        {
-            point.element.classList.remove('visible')
-        }
         controls.enableRotate = false
         controls.enablePan = false
         controls.enableZoom = false
