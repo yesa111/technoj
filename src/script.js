@@ -187,9 +187,9 @@ gltfLoader.load(
         })
         mixer = new THREE.AnimationMixer(gltf.scene)
         console.log('Animasyonlar:', gltf.animations)
-        if (gltf.animations && gltf.animations.length > 0) {
+        if (Array.isArray(gltf.animations) && gltf.animations.length > 0) {
             gltf.animations.forEach((anim, i) => {
-                if (anim) {
+                if (anim && anim.uuid && typeof anim.tracks !== 'undefined') {
                     try {
                         const action = mixer.clipAction(anim)
                         if (action) {
@@ -201,7 +201,7 @@ gltfLoader.load(
                         console.error('Animasyon oynatılamadı:', i, anim, e)
                     }
                 } else {
-                    console.warn('Animasyon undefined:', i)
+                    console.warn('Animasyon undefined veya geçersiz:', i, anim)
                 }
             })
         } else {
