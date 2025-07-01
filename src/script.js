@@ -111,7 +111,7 @@ const loadingManager = new THREE.LoadingManager(
 )
 
 // Sound
-const music = new Audio('/static/sounds/mario.mp3')
+// const music = new Audio('/static/sounds/mario.mp3') // Dosya yoksa yoruma alındı
 
 // Texture loader
 const textureLoader = new THREE.TextureLoader(loadingManager)
@@ -177,7 +177,7 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
  * Model
  */
 gltfLoader.load(
-    '/dist/models/Gameboy/gameboy_animated.glb',
+    '/static/models/Gameboy/gameboy_animated.glb',
     (gltf) => {
         gltf.scene.traverse((child) => {
             child.material = bakedMaterial
@@ -320,8 +320,8 @@ document.onkeydown = ((evt) =>
     if (evt.keyCode == 27) {
         buttonReturn.classList.remove('visible')
         mode = 'menu'
-        music.pause();
-        music.currentTime = 0;
+        // music.pause();
+        // music.currentTime = 0;
 
         gsap.timeline()
             .to(camera.position, {x: initialPosition.x, y: initialPosition.y, z: initialPosition.z, duration: 2})
@@ -359,9 +359,9 @@ document.onkeydown = ((evt) =>
             point.element.classList.remove('visible')
         }
 
-        music.volume = 0.5
-        music.currentTime = 0
-        music.play()
+        // music.volume = 0.5
+        // music.currentTime = 0
+        // music.play()
 
         gsap.timeline()
             .to(camera.position, {x: gamePosition.x, y: gamePosition.y, z: gamePosition.z, duration: 2})
@@ -391,8 +391,8 @@ document.onkeydown = ((evt) =>
         buttonInspect.classList.remove('visible')
         mode = 'inspect'
 
-        music.pause();
-        music.currentTime = 0;
+        // music.pause();
+        // music.currentTime = 0;
 
         // Camera 
         gsap.timeline()
@@ -432,8 +432,8 @@ buttonInspect.addEventListener('click', () =>
 {   
     buttonInspect.classList.remove('visible')
     mode = 'inspect'
-    music.pause();
-    music.currentTime = 0;
+    // music.pause();
+    // music.currentTime = 0;
 
     // Camera 
     gsap.timeline()
@@ -470,8 +470,8 @@ buttonReturn.addEventListener('click', () =>
 {   
     buttonReturn.classList.remove('visible')
     mode = 'menu'
-    music.pause();
-    music.currentTime = 0;
+    // music.pause();
+    // music.currentTime = 0;
 
     gsap.timeline()
         .to(camera.position, {x: initialPosition.x, y: initialPosition.y, z: initialPosition.z, duration: 2})
@@ -506,9 +506,9 @@ buttonGame.addEventListener('click', () =>
     moveMarioH = 'right'
     moveMarioV = 'up'
 
-    music.volume = 0.5
-    music.currentTime = 0
-    music.play()
+    // music.volume = 0.5
+    // music.currentTime = 0
+    // music.play()
 
     gsap.timeline()
         .to(camera.position, {x: gamePosition.x, y: gamePosition.y, z: gamePosition.z, duration: 2})
