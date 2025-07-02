@@ -30,74 +30,76 @@ const loadingManager = new THREE.LoadingManager(
         
         window.setTimeout(() =>
         {
-            for(const mesh of scene.children[2].children)
-            {
-                if(mesh.name === 'buttonA')
+            if (scene.children[2] && scene.children[2].children) {
+                for(const mesh of scene.children[2].children)
                 {
-                    pointsInspect.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.pointInspect-0')
-                        }
-                    )
+                    if(mesh.name === 'buttonA')
+                    {
+                        pointsInspect.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.pointInspect-0')
+                            }
+                        )
+                    }
+                    if(mesh.name === 'buttonB')
+                    {   
+                        pointsInspect.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.pointInspect-1')
+                            }
+                        )
+                    }
+                    if(mesh.name === 'controls')
+                    {
+                        pointsInspect.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.pointInspect-2')
+                            }
+                        )
+                    }
+                    if(mesh.name === 'buttonStart')
+                    {
+                        pointsInspect.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.pointInspect-3')
+                            }
+                        )
+                        pointsMenu.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.game')
+                            }
+                        )
+                    }
+                    if(mesh.name === 'buttonSelect')
+                    {
+                        pointsMenu.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.inspect')
+                            }
+                        )
+                        pointsInspect.push(
+                            {
+                                position: mesh.position,
+                                element: document.querySelector('.pointInspect-7')
+                            }
+                        )
+                    }
+                    if(mesh.name === 'sign')
+                    {
+                        gsap.timeline()
+                            .to(mesh.position, {y: 2.0, duration: 2})
+                    }
                 }
-                if(mesh.name === 'buttonB')
-                {   
-                    pointsInspect.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.pointInspect-1')
-                        }
-                    )
-                }
-                if(mesh.name === 'controls')
-                {
-                    pointsInspect.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.pointInspect-2')
-                        }
-                    )
-                }
-                if(mesh.name === 'buttonStart')
-                {
-                    pointsInspect.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.pointInspect-3')
-                        }
-                    )
-                    pointsMenu.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.game')
-                        }
-                    )
-                }
-                if(mesh.name === 'buttonSelect')
-                {
-                    pointsMenu.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.inspect')
-                        }
-                    )
-                    pointsInspect.push(
-                        {
-                            position: mesh.position,
-                            element: document.querySelector('.pointInspect-7')
-                        }
-                    )
-                }
-                if(mesh.name === 'sign')
-                {
-                    gsap.timeline()
-                        .to(mesh.position, {y: 2.0, duration: 2})
-                }
+                buttonInspect.classList.add('visible')
+                // console.log(scene.children[2].children)
+                sceneReady = true
             }
-            buttonInspect.classList.add('visible')
-            // console.log(scene.children[2].children)
-            sceneReady = true
         }, 3000)
     },
 
@@ -179,10 +181,12 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
 gltfLoader.load(
     import.meta.env.BASE_URL + 'static/models/Gameboy/gameboy_animated.glb',
     (gltf) => {
-        gltf.scene.traverse((child) => {
-            child.material = bakedMaterial
-        })
-        scene.add(gltf.scene)
+        if (scene.children[2] && scene.children[2].children) {
+            gltf.scene.traverse((child) => {
+                child.material = bakedMaterial
+            })
+            scene.add(gltf.scene)
+        }
     }
 );
 
