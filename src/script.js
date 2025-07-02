@@ -177,14 +177,15 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
  * Model
  */
 gltfLoader.load(
-    '/technoj/static/models/Gameboy/gameboy_animated.glb',
+    import.meta.env.BASE_URL + 'static/models/Gameboy/gameboy_animated.glb',
     (gltf) => {
         gltf.scene.traverse((child) => {
             child.material = bakedMaterial
         })
         scene.add(gltf.scene)
     }
-)
+);
+
 
 /**
  * Sizes
